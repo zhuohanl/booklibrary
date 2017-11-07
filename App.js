@@ -10,11 +10,13 @@ import { StackNavigator } from "react-navigation";
 
 import HomeScreen from "./HomeScreen";
 import SearchResultList from "./SearchResultList";
+import SearchResultDetail from "./SearchResultDetail";
 
 export default StackNavigator(
   {
-    Home: { screen: HomeScreen },
-    SearchResultList: { screen: SearchResultList }
+    // Home: { screen: HomeScreen },
+    SearchResultList: { screen: SearchResultList },
+    SearchResultDetail: { screen: SearchResultDetail }
   },
   {
     header: {

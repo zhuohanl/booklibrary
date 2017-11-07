@@ -21,7 +21,6 @@ var style = StyleSheet.create({
 
   heading1: {
     margin: 10,
-    height: 30,
     marginTop: 10,
     fontSize: 20,
     textAlign: "left",
@@ -41,13 +40,13 @@ var style = StyleSheet.create({
   },
 
   liIcon: {
-    marginLeft: 5,
     width: 80,
     height: 100
   },
 
   liItemBody: {
-    marginLeft: 10
+    marginLeft: 10,
+    width: 280
   },
 
   liTextHeading: {
@@ -64,6 +63,39 @@ var style = StyleSheet.create({
   separator: {
     height: 1,
     backgroundColor: "#CCCCCC"
+  },
+
+  itemView: {
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
+  heading2: {
+    fontSize: 16,
+    marginTop: 5,
+    marginLeft: 10,
+    textAlign: "left",
+    //color: '#FDFEFE',
+    fontWeight: "bold",
+    fontFamily: "Apple SD Gothic Neo"
+  },
+
+  table_Container: {
+    marginLeft: 10,
+    marginTop: 5
+  },
+
+  table_Head: {
+    height: 25,
+    backgroundColor: "#f1f8ff"
+  },
+
+  table_Row: {},
+
+  table_Text: {
+    fontSize: 16,
+    //marginLeft: 5,
+    textAlign: "left"
   }
 });
 

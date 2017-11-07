@@ -107,19 +107,27 @@ export default class SearchResultList extends Component {
   }
 
   renderItem(item) {
-    console.log("item.copies.key", item.copies.key);
+    console.log("item.key", item.key);
     return (
       <View>
         <ListItem style={style.li}>
           <Image style={style.liIcon} source={require("./book-icon.png")} />
-          <Body style={style.liItemBody}>
-            <Text style={style.liTextHeading}>{item.title}</Text>
-            <Text style={style.liText}>by {item.authors}</Text>
-            <Text style={style.liText}>
-              {item.year}, {item.edition}
-            </Text>
-            <Text style={style.liText}>Book: ON LOAN</Text>
-          </Body>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate("SearchResultDetail", {
+                bookKey: item.key
+              });
+            }}
+          >
+            <Body style={style.liItemBody}>
+              <Text style={style.liTextHeading}>{item.title}</Text>
+              <Text style={style.liText}>by {item.authors}</Text>
+              <Text style={style.liText}>
+                {item.year}, {item.edition}
+              </Text>
+              <Text style={style.liText}>Book: ON LOAN</Text>
+            </Body>
+          </TouchableOpacity>
         </ListItem>
         <View style={style.separator} />
       </View>
