@@ -68,7 +68,7 @@ export default class SearchResultList extends Component {
       filterIn: ["l"]
     };
   }
-  componentDidMount() {
+  componentWillMount() {
     this.ref.child("books").on("value", snap => {
       snap.forEach(child => {
         let item = child.val();
@@ -111,7 +111,10 @@ export default class SearchResultList extends Component {
     return (
       <View>
         <ListItem style={style.li}>
-          <Image style={style.liIcon} source={require("./book-icon.png")} />
+          <Image
+            style={style.liIcon}
+            source={require("./icon/book-icon.png")}
+          />
           <TouchableOpacity
             onPress={() => {
               this.props.navigation.navigate("SearchResultDetail", {

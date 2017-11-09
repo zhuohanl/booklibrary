@@ -69,43 +69,57 @@ export default class SearchResultDetail extends Component {
   constructor(props) {
     super(props);
     this.ref = firebase.database().ref();
-    this.bookKey = this.props.navigation.state.params.bookKey;
-    this.book = "";
-    this.copies = [];
-    this.state = {};
+    this.state = {
+      bookKey: this.props.navigation.state.params.bookKey,
+      book: null,
+      copies: []
+    };
   }
   componentWillMount() {
-    console.log("this.bookKey", this.bookKey);
-    this.ref.child("books/" + this.bookKey).on("value", snap => {
+    console.log("this.state.bookKey", this.state.bookKey);
+    let book = null;
+    let copies = [];
+
+    this.ref.child("books/" + this.state.bookKey).on("value", snap => {
       let item = snap.val();
       item.key = snap.key;
-      this.book = item;
+      book = item;
+      // this.book = item;
     });
 
-    this.ref.child("books/" + this.bookKey + "/copies").on("value", snap => {
-      snap.forEach(child => {
-        let copy = child.val();
-        copy.key = child.key;
-        this.copies.push(copy);
+    this.ref
+      .child("books/" + this.state.bookKey + "/copies")
+      .on("value", snap => {
+        snap.forEach(child => {
+          let copy = child.val();
+          copy.key = child.key;
+          copies.push(copy);
+        });
       });
-    });
 
-    console.log("this.book", this.book);
-    console.log("this.copies", this.copies);
+    console.log("this.state.book", this.state.book);
+    console.log("this.state.copies", this.state.copies);
+
+    this.setState({
+      book,
+      copies
+    });
   }
 
   render() {
-    console.log("this.book in render()", this.book);
+    console.log("this.state.book in render()", this.state.book);
+
+    let book = this.state.book;
 
     const tableData1 = [
-      ["Author:", this.book.authors],
-      ["Format:", this.book.format],
-      ["Language:", this.book.language],
-      ["Published:", this.book.publisher],
-      ["Edition:", this.book.edition]
+      ["Author:", book.authors],
+      ["Format:", book.format],
+      ["Language:", book.language],
+      ["Published:", book.publisher],
+      ["Edition:", book.edition]
     ];
 
-    let copies = this.copies;
+    let copies = this.state.copies;
     let countTotal = copies.length;
     let countAvailable = 0;
     let countOnloan = 0;
@@ -160,11 +174,11 @@ export default class SearchResultDetail extends Component {
               <View style={style.itemView}>
                 <Image
                   style={style.liIcon}
-                  source={require("./book-icon.png")}
+                  source={require("./icon/book-icon.png")}
                 />
               </View>
 
-              <Text style={style.heading2}>{this.book.title}</Text>
+              <Text style={style.heading2}>{book.title}</Text>
 
               <Table
                 style={style.table_Container}

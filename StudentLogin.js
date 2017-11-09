@@ -47,9 +47,9 @@ import Search from "react-native-search-box";
 
 // import firebase from "./firebaseConfig";
 
-export default class HomeScreen extends Component {
+export default class StudentLogin extends Component {
   static navigationOptions = {
-    title: "HomeScreen",
+    title: "StudentLogin",
     header: null,
     headerLeft: null
   };
@@ -64,13 +64,16 @@ export default class HomeScreen extends Component {
         <View style={style.contentContainer}>
           <StyleProvider style={getTheme(platform)}>
             <Header>
-              {/*<Left>
-                                    <Button transparent>
-                                        <Icon name='arrow-back' />
-                                    </Button>
-                                </Left>*/}
+              <Button transparent>
+                <Icon
+                  style={{ color: "#808080" }}
+                  name="arrow-back"
+                  onPress={() => this.props.navigation.navigate("Home")}
+                />
+              </Button>
+
               <Body>
-                <Title>Welcome</Title>
+                <Title>Student Login</Title>
               </Body>
             </Header>
           </StyleProvider>
@@ -83,58 +86,43 @@ export default class HomeScreen extends Component {
                 </Text>
                 <Text style={styles.input_Instruction2}>Australia</Text>
                 <Text style={styles.input_Instruction3}>Library</Text>
-                <Text style={styles.input_Instruction1}>Search & Find</Text>
-                <Search
-                  ref="search_box"
-                  placeholder="e.g. security in computing"
-                  searchIconCollapsedMargin={160}
-                  placeholderCollapsedMargin={140}
-                  onSearch={() => {
-                    this.props.navigation.navigate("SearchResultList");
-                  }}
+              </View>
+              <View style={styles.loginContainer}>
+                <Text style={styles.input_Instruction4}>Student Login</Text>
+              </View>
+              <View style={styles.loginContainer}>
+                <Text style={styles.input_Instruction5}>Username: </Text>
+                <TextInput
+                  style={styles.inputbox_Login}
+                  multiline
+                  blurOnSubmit
+                  placeholder="username"
+                  onChangeText={email => this.setState({})}
                 />
-                <List>
-                  <ListItem>
-                    <TouchableOpacity
-                      style={styles.touchable_highlight}
-                      onPress={() => {
-                        this.props.navigation.navigate("Login");
-                      }}
-                    >
-                      <Text style={styles.input_Instruction}>
-                        View My Library Records
-                      </Text>
-                    </TouchableOpacity>
-                  </ListItem>
-                  <ListItem>
-                    <TouchableOpacity style={styles.touchable_highlight}>
-                      <Text style={styles.input_Instruction}>
-                        Library Hour & Other Info
-                      </Text>
-                    </TouchableOpacity>
-                  </ListItem>
-                  <ListItem>
-                    <TouchableOpacity style={styles.touchable_highlight}>
-                      <Text style={styles.input_Instruction}>
-                        Frequently Asked Questions
-                      </Text>
-                    </TouchableOpacity>
-                  </ListItem>
-                </List>
+              </View>
+              <View style={styles.loginContainer}>
+                <Text style={styles.input_Instruction5}>Password: </Text>
+                <TextInput
+                  secureTextEntry={true}
+                  style={styles.inputbox_Login}
+                  placeholder="password"
+                  autoCorrect={false}
+                  onChangeText={password => this.setState({})}
+                />
+              </View>
+              <View style={styles.loginContainer}>
+                <Button
+                  style={styles.Login_Button}
+                  onPress={() => {
+                    this.props.navigation.navigate("MyAccount");
+                  }}
+                  //{this.login} //TODO: need to enable
+                >
+                  <Text style={styles.buttonText}>LOGIN</Text>
+                </Button>
               </View>
             </Container>
           </StyleProvider>
-          <Container style={styles.beta}>
-            <Button
-              style={styles.Login_Button}
-              onPress={() => {
-                this.props.navigation.navigate("Login");
-              }}
-              //{this.login} //TODO: need to enable
-            >
-              <Text style={styles.buttonText}>Student Login</Text>
-            </Button>
-          </Container>
         </View>
       </View>
     );
@@ -184,26 +172,20 @@ const styles = StyleSheet.create({
     marginBottom: 4
   },
 
-  inputNormal: {
-    height: 24,
-    width: 280,
-    borderRadius: 5,
-    borderWidth: 1,
-    textAlign: "left",
-    margin: 3,
-    marginBottom: 10,
-    alignSelf: "center",
-    borderColor: "#cccccc",
-    fontSize: 12,
-    paddingHorizontal: 6
+  input_Instruction4: {
+    fontSize: 20,
+    //color: '#FDFEFE',
+    fontWeight: "bold",
+    fontFamily: "Apple SD Gothic Neo",
+    marginBottom: 15
   },
 
-  beta: {
-    marginBottom: 80,
-    flexDirection: "row",
-    justifyContent: "flex-end",
-    alignItems: "center",
-    marginRight: 20
+  input_Instruction5: {
+    width: 120,
+    fontSize: 20,
+    //color: '#FDFEFE',
+    fontFamily: "Apple SD Gothic Neo",
+    marginBottom: 15
   },
 
   Login_Button: {
@@ -213,10 +195,43 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
 
-  touchable_highlight: {
-    height: 40,
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    margin: 0,
+    fontSize: 12
+  },
+
+  loginContainer: {
+    alignItems: "center",
+    justifyContent: "center",
     flexDirection: "row",
-    borderRadius: 20
+    marginBottom: 15
+  },
+
+  inputbox_Login: {
+    fontSize: 15,
+    height: 35,
+    width: 200,
+    padding: 7,
+    textAlign: "center",
+    borderRadius: 5,
+    borderWidth: 1,
+    marginBottom: 15
+  },
+
+  beta: {
+    marginBottom: 80,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+
+  Login_Button: {
+    marginTop: 30,
+    width: 120,
+    height: 30,
+    backgroundColor: "#990000",
+    justifyContent: "center"
   },
 
   buttonText: {
