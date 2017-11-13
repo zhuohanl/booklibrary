@@ -30,6 +30,32 @@ var style = StyleSheet.create({
     marginBottom: 4
   },
 
+  heading2: {
+    fontSize: 16,
+    marginTop: 5,
+    marginLeft: 10,
+    textAlign: "left",
+    //color: '#FDFEFE',
+    fontWeight: "bold",
+    fontFamily: "Apple SD Gothic Neo"
+  },
+
+  heading3: {
+    fontSize: 20,
+    textAlign: "left",
+    //color: '#FDFEFE',
+    fontWeight: "bold",
+    fontFamily: "Apple SD Gothic Neo"
+  },
+
+  heading4: {
+    fontSize: 16,
+    textAlign: "left",
+    //color: '#FDFEFE',
+    fontWeight: "bold",
+    fontFamily: "Apple SD Gothic Neo"
+  },
+
   li: {
     flex: 1,
     justifyContent: "flex-start"
@@ -68,16 +94,6 @@ var style = StyleSheet.create({
   itemView: {
     justifyContent: "center",
     alignItems: "center"
-  },
-
-  heading2: {
-    fontSize: 16,
-    marginTop: 5,
-    marginLeft: 10,
-    textAlign: "left",
-    //color: '#FDFEFE',
-    fontWeight: "bold",
-    fontFamily: "Apple SD Gothic Neo"
   },
 
   table_Container: {

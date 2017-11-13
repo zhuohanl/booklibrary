@@ -13,6 +13,9 @@ import SearchResultList from "./SearchResultList";
 import SearchResultDetail from "./SearchResultDetail";
 import StudentLogin from "./StudentLogin";
 import MyAccount from "./MyAccount";
+import LibraryRecord from "./LibraryRecord";
+import LibraryHour from "./LibraryHour";
+import LibraryContact from "./LibraryContact";
 
 export default StackNavigator(
   {
@@ -20,7 +23,10 @@ export default StackNavigator(
     SearchResultList: { screen: SearchResultList },
     SearchResultDetail: { screen: SearchResultDetail },
     Login: { screen: StudentLogin },
-    MyAccount: { screen: MyAccount }
+    MyAccount: { screen: MyAccount },
+    LibraryRecord: { screen: LibraryRecord },
+    Hour: { screen: LibraryHour },
+    Contact: { screen: LibraryContact }
   },
   {
     header: {

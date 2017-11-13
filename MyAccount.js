@@ -98,7 +98,12 @@ export default class MyAccount extends Component {
                     </Text>
                   </ListItem>
                   <ListItem>
-                    <TouchableOpacity style={styles.touchable_highlight}>
+                    <TouchableOpacity
+                      style={styles.touchable_highlight}
+                      onPress={() => {
+                        this.props.navigation.navigate("LibraryRecord");
+                      }}
+                    >
                       <Text style={styles.input_Instruction1}>
                         On Loan Records
                       </Text>

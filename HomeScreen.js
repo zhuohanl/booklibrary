@@ -107,10 +107,23 @@ export default class HomeScreen extends Component {
                     </TouchableOpacity>
                   </ListItem>
                   <ListItem>
-                    <TouchableOpacity style={styles.touchable_highlight}>
-                      <Text style={styles.input_Instruction}>
-                        Library Hour & Other Info
-                      </Text>
+                    <TouchableOpacity
+                      style={styles.touchable_highlight}
+                      onPress={() => {
+                        this.props.navigation.navigate("Hour");
+                      }}
+                    >
+                      <Text style={styles.input_Instruction}>Library Hour</Text>
+                    </TouchableOpacity>
+                  </ListItem>
+                  <ListItem>
+                    <TouchableOpacity
+                      style={styles.touchable_highlight}
+                      onPress={() => {
+                        this.props.navigation.navigate("Contact");
+                      }}
+                    >
+                      <Text style={styles.input_Instruction}>Contact Us</Text>
                     </TouchableOpacity>
                   </ListItem>
                   <ListItem>
@@ -199,7 +212,7 @@ const styles = StyleSheet.create({
   },
 
   beta: {
-    marginBottom: 80,
+    marginTop: 20,
     flexDirection: "row",
     justifyContent: "flex-end",
     alignItems: "center",
