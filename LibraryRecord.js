@@ -192,7 +192,10 @@ export default class LibraryRecord extends Component {
                 <Icon
                   style={{ color: "#808080" }}
                   name="arrow-back"
-                  onPress={() => this.props.navigation.navigate("MyAccount")}
+                  onPress={() =>
+                    this.props.navigation.navigate("MyAccount", {
+                      userId: this.props.navigation.state.params.userId
+                    })}
                 />
               </Button>
 
