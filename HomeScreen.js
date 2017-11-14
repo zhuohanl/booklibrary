@@ -56,21 +56,26 @@ export default class HomeScreen extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      keyword: [""]
+    };
   }
 
   render() {
+    let keyword = [];
     return (
       <View style={style.pageContainer}>
         <View style={style.contentContainer}>
           <StyleProvider style={getTheme(platform)}>
             <Header>
               {/*<Left>
-                                    <Button transparent>
-                                        <Icon name='arrow-back' />
-                                    </Button>
-                                </Left>*/}
+                                  <Button transparent>
+                                      <Icon name='arrow-back' />
+                                  </Button>
+                              </Left>*/}
               <Body>
-                <Title>Welcome</Title>
+                <Title>Home</Title>
               </Body>
             </Header>
           </StyleProvider>
@@ -87,10 +92,16 @@ export default class HomeScreen extends Component {
                 <Search
                   ref="search_box"
                   placeholder="e.g. security in computing"
+                  onChangeText={text => {
+                    keyword.push(text.toLowerCase());
+                    this.setState({ keyword });
+                  }}
                   searchIconCollapsedMargin={160}
                   placeholderCollapsedMargin={140}
                   onSearch={() => {
-                    this.props.navigation.navigate("SearchResultList");
+                    this.props.navigation.navigate("SearchResultList", {
+                      keyword: this.state.keyword
+                    });
                   }}
                 />
                 <List>
@@ -127,7 +138,12 @@ export default class HomeScreen extends Component {
                     </TouchableOpacity>
                   </ListItem>
                   <ListItem>
-                    <TouchableOpacity style={styles.touchable_highlight}>
+                    <TouchableOpacity
+                      style={styles.touchable_highlight}
+                      onPress={() => {
+                        this.props.navigation.navigate("FAQ");
+                      }}
+                    >
                       <Text style={styles.input_Instruction}>
                         Frequently Asked Questions
                       </Text>

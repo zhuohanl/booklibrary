@@ -97,9 +97,6 @@ export default class SearchResultDetail extends Component {
         });
       });
 
-    console.log("this.state.book", this.state.book);
-    console.log("this.state.copies", this.state.copies);
-
     this.setState({
       book,
       copies
@@ -107,7 +104,10 @@ export default class SearchResultDetail extends Component {
   }
 
   render() {
-    console.log("this.state.book in render()", this.state.book);
+    console.log("this.state.book", this.state.book);
+    console.log("this.state.copies", this.state.copies);
+
+    console.log("this.state.copies[0].key", this.state.copies[0].key);
 
     let book = this.state.book;
 
@@ -153,7 +153,9 @@ export default class SearchResultDetail extends Component {
                   style={{ color: "#808080" }}
                   name="arrow-back"
                   onPress={() =>
-                    this.props.navigation.navigate("SearchResultList")}
+                    this.props.navigation.navigate("SearchResultList", {
+                      keyword: this.props.navigation.state.params.keyword
+                    })}
                 />
               </Button>
 

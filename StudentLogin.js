@@ -45,7 +45,7 @@ import platform from "./native-base-theme/variables/platform";
 import Search from "react-native-search-box";
 //import SearchBar from "react-native-search-bar";
 
-// import firebase from "./firebaseConfig";
+import firebase from "./firebaseConfig";
 
 export default class StudentLogin extends Component {
   static navigationOptions = {
@@ -56,6 +56,14 @@ export default class StudentLogin extends Component {
 
   constructor(props) {
     super(props);
+
+    this.state = {
+      email: "",
+      password: "",
+      error: "",
+      load: "",
+      userId: ""
+    };
   }
 
   render() {
@@ -91,32 +99,34 @@ export default class StudentLogin extends Component {
                 <Text style={styles.input_Instruction4}>Student Login</Text>
               </View>
               <View style={styles.loginContainer}>
-                <Text style={styles.input_Instruction5}>Username: </Text>
+                <Text style={styles.input_Instruction5}>Username:</Text>
                 <TextInput
                   style={styles.inputbox_Login}
                   multiline
                   blurOnSubmit
                   placeholder="username"
-                  onChangeText={email => this.setState({})}
+                  autoCapitalize="none"
+                  onChangeText={email => this.setState({ email })}
                 />
               </View>
               <View style={styles.loginContainer}>
-                <Text style={styles.input_Instruction5}>Password: </Text>
+                <Text style={styles.input_Instruction5}>Password:</Text>
                 <TextInput
                   secureTextEntry={true}
                   style={styles.inputbox_Login}
                   placeholder="password"
                   autoCorrect={false}
-                  onChangeText={password => this.setState({})}
+                  onChangeText={password => this.setState({ password })}
                 />
               </View>
               <View style={styles.loginContainer}>
                 <Button
                   style={styles.Login_Button}
-                  onPress={() => {
-                    this.props.navigation.navigate("MyAccount");
-                  }}
-                  //{this.login} //TODO: need to enable
+                  onPress={() =>
+                    //{this.props.navigation.navigate("MyAccount")}
+                    {
+                      this.login();
+                    }}
                 >
                   <Text style={styles.buttonText}>LOGIN</Text>
                 </Button>
@@ -127,9 +137,42 @@ export default class StudentLogin extends Component {
       </View>
     );
   }
-}
 
-add = () => {};
+  login = () => {
+    this.setState({ error: "", loading: true });
+
+    const { email, password } = this.state;
+
+    if (this.state.email === "") {
+      alert("Authentication failed, please enter email/password!");
+    } else if (this.state.password === "") {
+      alert("Authentication failed, please enter email/password!");
+    } else {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .catch(() => {
+          this.setState({ error: "Authentication failed.", loading: false });
+          alert("Authentication failed, please try again!");
+        });
+
+      firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+          this.setState({ error: "", loading: false });
+          console.log("user.uid", user.uid);
+          this.props.navigation.navigate("MyAccount", { userId: user.uid });
+        }
+      });
+
+      // firebase.auth().onAuthStateChanged(user => {
+      //   if (user) {
+      //     this.setState({ userId: user.uid });
+      //     console.log("this.state.userId", this.state.userId);
+      //   }
+      // });
+    }
+  };
+}
 
 const styles = StyleSheet.create({
   SearchBox: {
@@ -181,11 +224,10 @@ const styles = StyleSheet.create({
   },
 
   input_Instruction5: {
-    width: 120,
-    fontSize: 20,
+    width: 80,
+    fontSize: 16,
     //color: '#FDFEFE',
-    fontFamily: "Apple SD Gothic Neo",
-    marginBottom: 15
+    fontFamily: "Apple SD Gothic Neo"
   },
 
   Login_Button: {
@@ -210,14 +252,13 @@ const styles = StyleSheet.create({
   },
 
   inputbox_Login: {
-    fontSize: 15,
+    fontSize: 12,
     height: 35,
-    width: 200,
-    padding: 7,
+    width: 240,
     textAlign: "center",
     borderRadius: 5,
     borderWidth: 1,
-    marginBottom: 15
+    flexDirection: "row"
   },
 
   beta: {

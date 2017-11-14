@@ -45,7 +45,7 @@ import platform from "./native-base-theme/variables/platform";
 import Search from "react-native-search-box";
 //import SearchBar from "react-native-search-bar";
 
-// import firebase from "./firebaseConfig";
+import firebase from "./firebaseConfig";
 
 export default class MyAccount extends Component {
   static navigationOptions = {
@@ -56,6 +56,41 @@ export default class MyAccount extends Component {
 
   constructor(props) {
     super(props);
+
+    this.ref = firebase.database().ref();
+
+    const userId = this.props.navigation.state.params.userId;
+    console.log("MyAccount: userId", userId);
+
+    this.loans = [];
+
+    this.state = {
+      userId: userId,
+      firstName: "",
+      lastName: "",
+      email: ""
+    };
+  }
+
+  componentWillMount() {
+    let firstName = "";
+    let lastName = "";
+    let email = "";
+    let loans = "";
+
+    //https://books-98796.firebaseio.com/borrowers/GeMC2xfSaIWfmueTWrYwYeL7jrp2/firstName
+    this.ref.child("borrowers/" + this.state.userId).on("value", snap => {
+      let user = snap.val();
+      firstName = user.firstName;
+      lastName = user.lastName;
+      email = user.email;
+
+      this.setState({ firstName });
+      this.setState({ lastName });
+      this.setState({ email });
+      // loans = user.loans;
+      // console.log("user.loans", user.loans);
+    });
   }
 
   render() {
@@ -88,20 +123,23 @@ export default class MyAccount extends Component {
                       source={require("./icon/profile-icon.png")}
                     />
                     <Body style={styles.profileBody}>
-                      <Text style={styles.input_Title}>Selina Li</Text>
+                      <Text style={styles.input_Title}>
+                        {this.state.firstName} {this.state.lastName}
+                      </Text>
                     </Body>
                   </ListItem>
                   <ListItem>
-                    <Text style={styles.input_Instruction}>Email: </Text>
                     <Text style={styles.input_Instruction}>
-                      zhuohanl@andrew.cmu.edu
+                      Email: {this.state.email}
                     </Text>
                   </ListItem>
                   <ListItem>
                     <TouchableOpacity
                       style={styles.touchable_highlight}
                       onPress={() => {
-                        this.props.navigation.navigate("LibraryRecord");
+                        this.props.navigation.navigate("LibraryRecord", {
+                          userId: this.props.navigation.state.params.userId
+                        });
                       }}
                     >
                       <Text style={styles.input_Instruction1}>

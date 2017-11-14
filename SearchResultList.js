@@ -63,12 +63,15 @@ export default class SearchResultList extends Component {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
+    const keyword = this.props.navigation.state.params.keyword;
     this.state = {
       dataSource: ds,
-      filterIn: ["l"]
+      filterIn: keyword
     };
+    console.log("filterIn", this.state.filterIn);
   }
   componentWillMount() {
+    console.log("keyword", this.props.navigation.state.params.keyword);
     this.ref.child("books").on("value", snap => {
       snap.forEach(child => {
         let item = child.val();
@@ -91,6 +94,7 @@ export default class SearchResultList extends Component {
    */
   isFilteredIn(item) {
     const { filterIn } = this.state;
+    console.log("const { filterIn }", filterIn);
 
     //Reduce filters are cool! TODO: Talk about them in class
     return filterIn.reduce((acc, curr) => {
@@ -118,7 +122,8 @@ export default class SearchResultList extends Component {
           <TouchableOpacity
             onPress={() => {
               this.props.navigation.navigate("SearchResultDetail", {
-                bookKey: item.key
+                bookKey: item.key,
+                keyword: this.props.navigation.state.params.keyword
               });
             }}
           >
@@ -167,9 +172,9 @@ export default class SearchResultList extends Component {
                 dataSource={this.state.dataSource}
                 renderRow={rowData => {
                   //Remove items that don't fit out IN filters
-                  // if (!this.isFilteredIn(rowData)) {
-                  //   return null;
-                  // }
+                  if (!this.isFilteredIn(rowData)) {
+                    return null;
+                  }
 
                   return this.renderItem(rowData);
                 }}

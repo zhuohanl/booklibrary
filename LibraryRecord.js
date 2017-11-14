@@ -56,34 +56,54 @@ export default class LibraryRecord extends Component {
     title: "LibraryRecord",
     header: null
   };
+
   constructor(props) {
     super(props);
     this.ref = firebase.database().ref();
-    this.items = [];
+
+    const userId = this.props.navigation.state.params.userId;
+    this.loans = [];
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
     this.state = {
       dataSource: ds,
-      filterIn: ["l"]
+      userId: userId
     };
   }
+
   componentWillMount() {
-    this.ref.child("books").on("value", snap => {
-      snap.forEach(child => {
-        let item = child.val();
-        item.key = child.key;
-        this.items.push(item);
-        console.log("this.items", this.items);
-        console.log("this.items.length", this.items.length);
-        const ds = this.state.dataSource;
-        this.setState({
-          dataSource: ds.cloneWithRows(this.items)
+    //https://books-98796.firebaseio.com/borrowers/GeMC2xfSaIWfmueTWrYwYeL7jrp2/loans/loan1
+    this.ref
+      .child("borrowers/" + this.state.userId + "/loans")
+      .on("value", snap => {
+        snap.forEach(child => {
+          let loan = {};
+          let item = child.val();
+          loan["key"] = child.key;
+          loan["beginDate"] = item.beginDate;
+          // loan["beginYear"] = item.beginYear;
+          // loan["beginMonth"] = item.beginMonth;
+          // loan["beginDay"] = item.beginDay;
+          loan["bookId"] = item.bookId;
+
+          this.ref.child("books/" + item.bookId).on("value", snap => {
+            let item2 = snap.val();
+            loan["bookTitle"] = item2.title;
+            loan["bookAuthors"] = item2.authors;
+            loan["bookYear"] = item2.year;
+            loan["bookEdition"] = item2.edition;
+
+            this.loans.push(loan);
+
+            const ds = this.state.dataSource;
+            this.setState({
+              dataSource: ds.cloneWithRows(this.loans)
+            });
+          });
         });
       });
-    });
-
-    console.log("this.items", this.items);
+    console.log("this.loans", this.loans);
   }
 
   /**
@@ -107,7 +127,32 @@ export default class LibraryRecord extends Component {
   }
 
   renderItem(item) {
-    console.log("item.key", item.key);
+    // let beginDate = new Date(item.beginYear, item.beginMonth, item.beginDay);
+    // let beginDateString = `${item.beginYear}/${item.beginMonth}/${item.beginDay}`;
+
+    let beginDateString = item.beginDate;
+    let beginDate = new Date(beginDateString);
+
+    let tempDate = beginDate;
+    let dueDate = new Date(
+      tempDate.setTime(tempDate.getTime() + 14 * 86400000)
+    );
+    let dueDateString = `${dueDate.getFullYear()}/${dueDate.getMonth() +
+      1}/${dueDate.getDate()}`;
+
+    let today = new Date();
+    let timeDiff = Math.abs(dueDate.getTime() - today.getTime());
+    let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    let status = "";
+    if (diffDays === 0) {
+      status = "due today";
+    } else if (diffDays > 0) {
+      status = `overdue for ${diffDays} days`;
+    } else {
+      status = `due in ${diffDays} days`;
+    }
+
+    console.log("item", item);
     return (
       <View>
         <ListItem style={style.li}>
@@ -121,12 +166,14 @@ export default class LibraryRecord extends Component {
             }}
           >
             <Body style={style.liItemBody}>
-              <Text style={style.liTextHeading}>{item.title}</Text>
-              <Text style={style.liText}>by {item.authors}</Text>
+              <Text style={style.liTextHeading}>{item.bookTitle}</Text>
+              <Text style={style.liText}>by {item.bookAuthors}</Text>
               <Text style={style.liText}>
-                {item.year}, {item.edition}
+                {item.bookYear}, {item.bookEdition}
               </Text>
-              <Text style={style.liText}>Borrow date: {}</Text>
+              <Text style={style.liText}>Borrow date: {beginDateString}</Text>
+              <Text style={style.liText}>Due date: {dueDateString}</Text>
+              <Text style={style.liText}>Status: {status}</Text>
             </Body>
           </TouchableOpacity>
         </ListItem>
@@ -145,7 +192,7 @@ export default class LibraryRecord extends Component {
                 <Icon
                   style={{ color: "#808080" }}
                   name="arrow-back"
-                  onPress={() => this.props.navigation.navigate("Home")}
+                  onPress={() => this.props.navigation.navigate("MyAccount")}
                 />
               </Button>
 
