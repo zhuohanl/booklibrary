@@ -53,9 +53,9 @@ import platform from "./native-base-theme/variables/platform";
 
 import firebase from "./firebaseConfig";
 
-export default class LibraryContact extends Component {
+export default class Location extends Component {
   static navigationOptions = {
-    title: "LibraryContact",
+    title: "Location",
     header: null
   };
 
@@ -64,10 +64,14 @@ export default class LibraryContact extends Component {
 
     this.state = {
       region: {
-        latitude: 37.78825,
-        longitude: -122.4324,
+        latitude: -34.92866,
+        longitude: 138.600993,
         latitudeDelta: 0.0922,
         longitudeDelta: 0.0421
+      },
+      coordinate: {
+        latitude: -34.92866,
+        longitude: 138.600993
       }
     };
   }
@@ -91,39 +95,39 @@ export default class LibraryContact extends Component {
               </Button>
 
               <Body>
-                <Title>Contact us</Title>
+                <Title>Location</Title>
               </Body>
             </Header>
           </StyleProvider>
 
-          <ScrollView>
-            <View style={style.form_Container}>
-              <Text style={styles.input_Instruction2}>
-                Carnegie Mellon University
-              </Text>
-              <Text style={styles.input_Instruction2}>Australia</Text>
-              <Text style={styles.input_Instruction3}>Library</Text>
-              <ListItem itemDivider>
-                <Text style={style.heading3}>Contacts</Text>
-              </ListItem>
-              <View style={styles.contactView}>
-                <Text style={style.heading4}>Nereshnee Shunmugam</Text>
-                <Text>Manager of Admissions & Student Services</Text>
-                <Text>Email: nshunmugam@australia.cmu.edu</Text>
-                <Text>Phone: +61(0) 8 8110 9922</Text>
-              </View>
-              <View style={styles.contactView}>
-                <Text style={style.heading4}>Zhuohang (Selina) Li</Text>
-                <Text>Library Assistant</Text>
-                <Text>Email: zhuohanl@australia.cmu.edu</Text>
-              </View>
-              <View style={styles.contactView}>
-                <Text style={style.heading4}>Mustafa M Ghazanfar</Text>
-                <Text>Library Assistant</Text>
-                <Text>Email: zmghazanf@australia.cmu.edu</Text>
-              </View>
+          <View style={style.form_Container}>
+            <Text style={styles.input_Instruction2}>
+              Carnegie Mellon University
+            </Text>
+            <Text style={styles.input_Instruction2}>Australia</Text>
+            <Text style={styles.input_Instruction3}>Library</Text>
+            <ListItem itemDivider>
+              <Text style={style.heading3}>Location</Text>
+            </ListItem>
+
+            <View style={styles.contactView}>
+              <Text>Torrens Building</Text>
+              <Text>220 Victoria Square</Text>
+              <Text>Adelaide, South Australia</Text>
+              <Text>5000, Australia</Text>
             </View>
-          </ScrollView>
+
+            <View style={styles.beta}>
+              <Button
+                style={styles.Login_Button}
+                onPress={() => {
+                  this.props.navigation.navigate("map");
+                }}
+              >
+                <Text style={styles.buttonText}>View Map</Text>
+              </Button>
+            </View>
+          </View>
         </View>
       </View>
     );
@@ -163,11 +167,24 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
 
-  map: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0
+  beta: {
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row"
+  },
+
+  Login_Button: {
+    marginTop: 40,
+    width: 180,
+    height: 50,
+    backgroundColor: "#990000",
+    justifyContent: "center"
+  },
+
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    margin: 0,
+    fontSize: 16
   }
 });

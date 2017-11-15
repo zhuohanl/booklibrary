@@ -98,6 +98,7 @@ export default class HomeScreen extends Component {
                   }}
                   searchIconCollapsedMargin={160}
                   placeholderCollapsedMargin={140}
+                  autoCapitalize="none"
                   onSearch={() => {
                     this.props.navigation.navigate("SearchResultList", {
                       keyword: this.state.keyword
@@ -125,6 +126,18 @@ export default class HomeScreen extends Component {
                       }}
                     >
                       <Text style={styles.input_Instruction}>Library Hour</Text>
+                    </TouchableOpacity>
+                  </ListItem>
+                  <ListItem>
+                    <TouchableOpacity
+                      style={styles.touchable_highlight}
+                      onPress={() => {
+                        this.props.navigation.navigate("Location");
+                      }}
+                    >
+                      <Text style={styles.input_Instruction}>
+                        Library Location
+                      </Text>
                     </TouchableOpacity>
                   </ListItem>
                   <ListItem>
@@ -243,7 +256,7 @@ const styles = StyleSheet.create({
   },
 
   touchable_highlight: {
-    height: 40,
+    height: 30,
     flexDirection: "row",
     borderRadius: 20
   },

@@ -9,7 +9,8 @@ import {
   TextInput,
   DatePickerIOS,
   TouchableOpacity,
-  Switch
+  Switch,
+  AlertIOS
 } from "react-native";
 import { StackNavigator } from "react-navigation";
 import {
@@ -65,6 +66,7 @@ export default class MyAccount extends Component {
     this.loans = [];
 
     this.state = {
+      // userId: "",
       userId: userId,
       firstName: "",
       lastName: "",
@@ -72,7 +74,7 @@ export default class MyAccount extends Component {
     };
   }
 
-  componentWillMount() {
+  componentDidMount() {
     let firstName = "";
     let lastName = "";
     let email = "";
@@ -80,18 +82,78 @@ export default class MyAccount extends Component {
 
     //https://books-98796.firebaseio.com/borrowers/GeMC2xfSaIWfmueTWrYwYeL7jrp2/firstName
     this.ref.child("borrowers/" + this.state.userId).on("value", snap => {
-      let user = snap.val();
-      firstName = user.firstName;
-      lastName = user.lastName;
-      email = user.email;
+      console.log(snap.val());
 
-      this.setState({ firstName });
-      this.setState({ lastName });
-      this.setState({ email });
-      // loans = user.loans;
-      // console.log("user.loans", user.loans);
+      if (snap.exists()) {
+        let user = snap.val();
+        firstName = user.firstName;
+        lastName = user.lastName;
+        email = user.email;
+
+        this.setState({ firstName });
+        this.setState({ lastName });
+        this.setState({ email });
+        // loans = user.loans;
+        // console.log("user.loans", user.loans);
+      }
     });
   }
+
+  alertLogout = () => {
+    AlertIOS.alert("You are going to log out", "Do you wish to continue?", [
+      {
+        text: "Yes",
+        onPress: () => {
+          firebase
+            .auth()
+            .signOut()
+            .then(() => {
+              // Sign-out successful.
+              console.log("Sign out successfully");
+              this.props.navigation.navigate("Home");
+            })
+            .catch(error => {
+              // An error happened.
+              console.log(error);
+            });
+        }
+      },
+      {
+        text: "Cancel",
+        onPress: () => console.log("User pressed cancel")
+      }
+    ]);
+  };
+
+  alertLogout2 = () => {
+    AlertIOS.alert(
+      "You are going to log out and go to Frequently Asked Questions page",
+      "Do you wish to continue?",
+      [
+        {
+          text: "Yes",
+          onPress: () => {
+            firebase
+              .auth()
+              .signOut()
+              .then(() => {
+                // Sign-out successful.
+                console.log("Sign out successfully");
+                this.props.navigation.navigate("FAQ");
+              })
+              .catch(error => {
+                // An error happened.
+                console.log(error);
+              });
+          }
+        },
+        {
+          text: "Cancel",
+          onPress: () => console.log("User pressed cancel")
+        }
+      ]
+    );
+  };
 
   render() {
     return (
@@ -103,13 +165,20 @@ export default class MyAccount extends Component {
                 <Icon
                   style={{ color: "#808080" }}
                   name="arrow-back"
-                  onPress={() => this.props.navigation.navigate("Home")}
+                  onPress={() => this.alertLogout()}
                 />
               </Button>
 
               <Body>
                 <Title>My Library Account</Title>
               </Body>
+
+              <Button
+                style={styles.Login_Button}
+                onPress={() => this.alertLogout()}
+              >
+                <Text style={styles.buttonText}>Logout</Text>
+              </Button>
             </Header>
           </StyleProvider>
 
@@ -148,6 +217,9 @@ export default class MyAccount extends Component {
                     </TouchableOpacity>
                   </ListItem>
                 </List>
+                <TouchableOpacity onPress={() => this.alertLogout2()}>
+                  <Text style={styles.noteText}>Why is my page empty?</Text>
+                </TouchableOpacity>
               </View>
             </Container>
           </StyleProvider>
@@ -192,5 +264,28 @@ const styles = StyleSheet.create({
   profileBody: {
     marginLeft: 20,
     width: 280
+  },
+
+  noteText: {
+    marginTop: 30,
+    marginLeft: 20,
+    fontSize: 12,
+    color: "#0000ff",
+    fontFamily: "AvenirNext-Italic",
+    textDecorationLine: "underline"
+  },
+
+  Login_Button: {
+    width: 60,
+    height: 30,
+    backgroundColor: "#990000"
+  },
+
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    margin: 0,
+    fontSize: 12,
+    textAlign: "center"
   }
 });

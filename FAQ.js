@@ -97,15 +97,38 @@ export default class FAQ extends Component {
               </ListItem>
               <View style={styles.contactView}>
                 <Text style={style.heading4}>
+                  Q: Why I can log in but my library account page is empty?
+                </Text>
+                <Text style={style.normalText}>
+                  A: You can log in because you are CMUA student and we use
+                  central authentication system. You account page is empty
+                  because you might have never borrowed any books before. We
+                  will create your records when you borrow books for the first
+                  time.
+                </Text>
+              </View>
+              <View style={styles.contactView}>
+                <Text style={style.heading4}>
+                  Q: Can I borrow books online?
+                </Text>
+                <Text style={style.normalText}>
+                  A: Currently we do not provide online borrowing. Please come
+                  to the library for book issuing.
+                </Text>
+              </View>
+              <View style={styles.contactView}>
+                <Text style={style.heading4}>
                   Q: How many books may I borrow each time?
                 </Text>
-                <Text>A: You may borrow up to 5 books each time.</Text>
+                <Text style={style.normalText}>
+                  A: You may borrow up to 5 books each time.
+                </Text>
               </View>
               <View style={styles.contactView}>
                 <Text style={style.heading4}>
                   Q: How long may I borrow the books for?
                 </Text>
-                <Text>
+                <Text style={style.normalText}>
                   A: For each borrowing, you can keep the book on loan for TWO
                   weeks.
                 </Text>
@@ -114,7 +137,7 @@ export default class FAQ extends Component {
                 <Text style={style.heading4}>
                   Q: Will I get reminder when the book becomes due?
                 </Text>
-                <Text>
+                <Text style={style.normalText}>
                   A: Yes. Our library assistants will send you email reminders
                   when your book becomes due.
                 </Text>
@@ -123,7 +146,7 @@ export default class FAQ extends Component {
                 <Text style={style.heading4}>
                   Q: Can I reissue the book when it becomes due?
                 </Text>
-                <Text>
+                <Text style={style.normalText}>
                   A: Yes. You may reissue each book for a consecutive of THREE
                   times. We suggest you bring the book to the library to reissue
                   it.
@@ -167,6 +190,7 @@ const styles = StyleSheet.create({
   contactView: {
     marginTop: 10,
     marginLeft: 5,
+    marginRight: 5,
     marginBottom: 10,
     justifyContent: "center"
   },

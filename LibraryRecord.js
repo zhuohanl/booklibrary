@@ -18,7 +18,8 @@ import {
   AsyncStorage,
   TextInput,
   DatePickerIOS,
-  TouchableOpacity
+  TouchableOpacity,
+  AlertIOS
 } from "react-native";
 
 import style from "./style";
@@ -202,6 +203,13 @@ export default class LibraryRecord extends Component {
               <Body>
                 <Title>My On Loan Records</Title>
               </Body>
+
+              <Button
+                style={styles.Login_Button}
+                onPress={() => this.alertLogout()}
+              >
+                <Text style={styles.buttonText}>Logout</Text>
+              </Button>
             </Header>
           </StyleProvider>
 
@@ -224,6 +232,46 @@ export default class LibraryRecord extends Component {
       </View>
     );
   }
+
+  alertLogout = () => {
+    AlertIOS.alert("You are going to log out", "Do you wish to continue?", [
+      {
+        text: "Yes",
+        onPress: () => {
+          firebase
+            .auth()
+            .signOut()
+            .then(() => {
+              // Sign-out successful.
+              console.log("Sign out successfully");
+              this.props.navigation.navigate("Home");
+            })
+            .catch(error => {
+              // An error happened.
+              console.log(error);
+            });
+        }
+      },
+      {
+        text: "Cancel",
+        onPress: () => console.log("User pressed cancel")
+      }
+    ]);
+  };
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  Login_Button: {
+    width: 60,
+    height: 30,
+    backgroundColor: "#990000"
+  },
+
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    margin: 0,
+    fontSize: 12,
+    textAlign: "center"
+  }
+});

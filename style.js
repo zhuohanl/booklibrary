@@ -19,6 +19,16 @@ var style = StyleSheet.create({
     //backgroundColor: '#ffffff',
   },
 
+  form_Container2: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "flex-end",
+    alignItems: "center"
+  },
+
   heading1: {
     margin: 10,
     marginTop: 10,
@@ -50,9 +60,17 @@ var style = StyleSheet.create({
 
   heading4: {
     fontSize: 16,
-    textAlign: "left",
+    textAlign: "justify",
     //color: '#FDFEFE',
     fontWeight: "bold",
+    fontFamily: "Apple SD Gothic Neo"
+  },
+
+  normalText: {
+    fontSize: 16,
+    textAlign: "justify",
+    //color: '#FDFEFE',
+    // fontWeight: "bold",
     fontFamily: "Apple SD Gothic Neo"
   },
 

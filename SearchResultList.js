@@ -56,6 +56,7 @@ export default class SearchResultList extends Component {
     title: "SearchResultList",
     header: null
   };
+
   constructor(props) {
     super(props);
     this.ref = firebase.database().ref();
@@ -70,15 +71,28 @@ export default class SearchResultList extends Component {
     };
     console.log("filterIn", this.state.filterIn);
   }
+
   componentWillMount() {
     console.log("keyword", this.props.navigation.state.params.keyword);
+
     this.ref.child("books").on("value", snap => {
       snap.forEach(child => {
         let item = child.val();
         item.key = child.key;
+
+        status = "ON LOAN";
+
+        this.ref.child("books/" + child.key + "/copies").on("value", snap => {
+          snap.forEach(child => {
+            let copy = child.val();
+            if (copy.toLowerCase() === "available") {
+              status = "AVAILABLE";
+            }
+          });
+        });
+
+        item["status"] = status;
         this.items.push(item);
-        console.log("this.items", this.items);
-        console.log("this.items.length", this.items.length);
         const ds = this.state.dataSource;
         this.setState({
           dataSource: ds.cloneWithRows(this.items)
@@ -133,7 +147,7 @@ export default class SearchResultList extends Component {
               <Text style={style.liText}>
                 {item.year}, {item.edition}
               </Text>
-              <Text style={style.liText}>Book: ON LOAN</Text>
+              <Text style={style.liText}>Book: {item.status}</Text>
             </Body>
           </TouchableOpacity>
         </ListItem>
@@ -143,6 +157,8 @@ export default class SearchResultList extends Component {
   }
 
   render() {
+    const { filterIn } = this.state;
+
     return (
       <View style={style.pageContainer}>
         <View style={style.contentContainer}>
@@ -164,9 +180,7 @@ export default class SearchResultList extends Component {
 
           <ScrollView>
             <View>
-              <Text style={style.heading1}>
-                Search Results of "security in computing":
-              </Text>
+              <Text style={style.heading1}>Search Results of {filterIn}:</Text>
               <View style={style.separator} />
               <ListView
                 dataSource={this.state.dataSource}

@@ -70,6 +70,7 @@ export default class SearchResultDetail extends Component {
     super(props);
     this.ref = firebase.database().ref();
     this.state = {
+      keyword: this.props.navigation.state.params.keyword,
       bookKey: this.props.navigation.state.params.bookKey,
       book: null,
       copies: []
@@ -168,7 +169,7 @@ export default class SearchResultDetail extends Component {
           <ScrollView>
             <View>
               <Text style={style.heading1}>
-                Search Results of "security in computing":
+                Search Results of {this.state.keyword}:
               </Text>
 
               <View style={style.separator} />

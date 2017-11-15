@@ -151,18 +151,17 @@ export default class StudentLogin extends Component {
       firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
+        .then(user => {
+          // if (user) {
+          this.setState({ error: "", loading: false });
+          console.log("user.uid", user.uid);
+          this.props.navigation.navigate("MyAccount", { userId: user.uid });
+          // }
+        })
         .catch(() => {
           this.setState({ error: "Authentication failed.", loading: false });
           alert("Authentication failed, please try again!");
         });
-
-      firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-          this.setState({ error: "", loading: false });
-          console.log("user.uid", user.uid);
-          this.props.navigation.navigate("MyAccount", { userId: user.uid });
-        }
-      });
 
       // firebase.auth().onAuthStateChanged(user => {
       //   if (user) {
