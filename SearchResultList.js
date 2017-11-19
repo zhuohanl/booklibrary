@@ -60,6 +60,7 @@ export default class SearchResultList extends Component {
   constructor(props) {
     super(props);
     this.ref = firebase.database().ref();
+    this.storage = firebase.storage();
     this.items = [];
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
@@ -80,8 +81,13 @@ export default class SearchResultList extends Component {
         let item = child.val();
         item.key = child.key;
 
-        status = "ON LOAN";
+        let icon_address = "./icon/book-icon.png";
+        if (typeof item.icon !== "undefined") {
+          console.log("item.icon", item.icon);
+          icon_address = item.icon;
+        }
 
+        let status = "ON LOAN";
         this.ref.child("books/" + child.key + "/copies").on("value", snap => {
           snap.forEach(child => {
             let copy = child.val();
@@ -92,6 +98,7 @@ export default class SearchResultList extends Component {
         });
 
         item["status"] = status;
+        item["icon_address"] = icon_address;
         this.items.push(item);
         const ds = this.state.dataSource;
         this.setState({
@@ -126,13 +133,17 @@ export default class SearchResultList extends Component {
 
   renderItem(item) {
     console.log("item.key", item.key);
+    console.log("item.icon_address", item.icon_address);
+
+    let src = require("./icon/book-icon.png");
+    if (item.icon_address !== "./icon/book-icon.png") {
+      src = { uri: item.icon_address };
+    }
+
     return (
       <View>
         <ListItem style={style.li}>
-          <Image
-            style={style.liIcon}
-            source={require("./icon/book-icon.png")}
-          />
+          <Image style={style.liIcon} source={src} />
           <TouchableOpacity
             onPress={() => {
               this.props.navigation.navigate("SearchResultDetail", {
@@ -145,7 +156,7 @@ export default class SearchResultList extends Component {
               <Text style={style.liTextHeading}>{item.title}</Text>
               <Text style={style.liText}>by {item.authors}</Text>
               <Text style={style.liText}>
-                {item.year}, {item.edition}
+                {item.year}, {item.edition} edition
               </Text>
               <Text style={style.liText}>Book: {item.status}</Text>
             </Body>

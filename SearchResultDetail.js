@@ -81,11 +81,16 @@ export default class SearchResultDetail extends Component {
     let book = null;
     let copies = [];
 
+    let icon_address = "./icon/book-icon.png";
     this.ref.child("books/" + this.state.bookKey).on("value", snap => {
       let item = snap.val();
       item.key = snap.key;
       book = item;
-      // this.book = item;
+
+      if (typeof item.icon !== "undefined") {
+        icon_address = item.icon;
+      }
+      book["icon_address"] = icon_address;
     });
 
     this.ref
@@ -144,6 +149,11 @@ export default class SearchResultDetail extends Component {
     ];
     const widthArr = [120, 220];
 
+    let src = require("./icon/book-icon.png");
+    if (book.icon_address !== "./icon/book-icon.png") {
+      src = { uri: book.icon_address };
+    }
+
     return (
       <View style={style.pageContainer}>
         <View style={style.contentContainer}>
@@ -175,10 +185,7 @@ export default class SearchResultDetail extends Component {
               <View style={style.separator} />
 
               <View style={style.itemView}>
-                <Image
-                  style={style.liIcon}
-                  source={require("./icon/book-icon.png")}
-                />
+                <Image style={style.liIcon2} source={src} />
               </View>
 
               <Text style={style.heading2}>{book.title}</Text>

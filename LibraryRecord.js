@@ -95,6 +95,13 @@ export default class LibraryRecord extends Component {
             loan["bookYear"] = item2.year;
             loan["bookEdition"] = item2.edition;
 
+            let icon_address = "./icon/book-icon.png";
+            if (typeof item2.icon !== "undefined") {
+              console.log("item2.icon", item2.icon);
+              icon_address = item2.icon;
+            }
+            loan["bookIconAddress"] = icon_address;
+
             this.loans.push(loan);
 
             const ds = this.state.dataSource;
@@ -153,14 +160,16 @@ export default class LibraryRecord extends Component {
       status = `due in ${diffDays} days`;
     }
 
+    let src = require("./icon/book-icon.png");
+    if (item.bookIconAddress !== "./icon/book-icon.png") {
+      src = { uri: item.bookIconAddress };
+    }
+
     console.log("item", item);
     return (
       <View>
         <ListItem style={style.li}>
-          <Image
-            style={style.liIcon}
-            source={require("./icon/book-icon.png")}
-          />
+          <Image style={style.liIcon} source={src} />
           <TouchableOpacity
             onPress={() => {
               this.props.navigation.navigate();
@@ -170,7 +179,7 @@ export default class LibraryRecord extends Component {
               <Text style={style.liTextHeading}>{item.bookTitle}</Text>
               <Text style={style.liText}>by {item.bookAuthors}</Text>
               <Text style={style.liText}>
-                {item.bookYear}, {item.bookEdition}
+                {item.bookYear}, {item.bookEdition} edition
               </Text>
               <Text style={style.liText}>Borrow date: {beginDateString}</Text>
               <Text style={style.liText}>Due date: {dueDateString}</Text>

@@ -42,7 +42,7 @@ var style = StyleSheet.create({
 
   heading2: {
     fontSize: 16,
-    marginTop: 5,
+    marginTop: 10,
     marginLeft: 10,
     textAlign: "left",
     //color: '#FDFEFE',
@@ -86,6 +86,12 @@ var style = StyleSheet.create({
   liIcon: {
     width: 80,
     height: 100
+  },
+
+  liIcon2: {
+    marginTop: 12,
+    width: 150,
+    height: 180
   },
 
   liItemBody: {

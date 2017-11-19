@@ -74,7 +74,7 @@ export default class MyAccount extends Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     let firstName = "";
     let lastName = "";
     let email = "";
