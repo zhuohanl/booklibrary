@@ -86,7 +86,10 @@ export default class Location extends Component {
         <View style={style.contentContainer}>
           <StyleProvider style={getTheme(platform)}>
             <Header>
-              <Button transparent>
+              <Button
+                transparent
+                onPress={() => this.props.navigation.navigate("Home")}
+              >
                 <Icon
                   style={{ color: "#808080" }}
                   name="arrow-back"
@@ -100,34 +103,35 @@ export default class Location extends Component {
             </Header>
           </StyleProvider>
 
-          <View style={style.form_Container}>
-            <Text style={styles.input_Instruction2}>
-              Carnegie Mellon University
-            </Text>
-            <Text style={styles.input_Instruction2}>Australia</Text>
-            <Text style={styles.input_Instruction3}>Library</Text>
-            <ListItem itemDivider>
-              <Text style={style.heading3}>Location</Text>
-            </ListItem>
+          <ScrollView>
+            <View style={style.form_Container}>
+              <Text style={styles.input_Instruction2}>
+                Carnegie Mellon University
+              </Text>
+              <Text style={styles.input_Instruction2}>Australia</Text>
+              <Text style={styles.input_Instruction3}>Library</Text>
+              <ListItem itemDivider>
+                <Text style={style.heading3}>Location</Text>
+              </ListItem>
+              <View style={styles.contactView}>
+                <Text>Torrens Building</Text>
+                <Text>220 Victoria Square</Text>
+                <Text>Adelaide, South Australia</Text>
+                <Text>5000, Australia</Text>
+              </View>
 
-            <View style={styles.contactView}>
-              <Text>Torrens Building</Text>
-              <Text>220 Victoria Square</Text>
-              <Text>Adelaide, South Australia</Text>
-              <Text>5000, Australia</Text>
+              <View style={styles.beta}>
+                <Button
+                  style={styles.Login_Button}
+                  onPress={() => {
+                    this.props.navigation.navigate("map");
+                  }}
+                >
+                  <Text style={styles.buttonText}>View Map</Text>
+                </Button>
+              </View>
             </View>
-
-            <View style={styles.beta}>
-              <Button
-                style={styles.Login_Button}
-                onPress={() => {
-                  this.props.navigation.navigate("map");
-                }}
-              >
-                <Text style={styles.buttonText}>View Map</Text>
-              </Button>
-            </View>
-          </View>
+          </ScrollView>
         </View>
       </View>
     );

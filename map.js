@@ -88,7 +88,10 @@ export default class Map extends Component {
         <View style={style.contentContainer}>
           <StyleProvider style={getTheme(platform)}>
             <Header>
-              <Button transparent>
+              <Button
+                transparent
+                onPress={() => this.props.navigation.navigate("Location")}
+              >
                 <Icon
                   style={{ color: "#808080" }}
                   name="arrow-back"

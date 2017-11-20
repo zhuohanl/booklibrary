@@ -159,7 +159,13 @@ export default class SearchResultDetail extends Component {
         <View style={style.contentContainer}>
           <StyleProvider style={getTheme(platform)}>
             <Header>
-              <Button transparent>
+              <Button
+                transparent
+                onPress={() =>
+                  this.props.navigation.navigate("SearchResultList", {
+                    keyword: this.props.navigation.state.params.keyword
+                  })}
+              >
                 <Icon
                   style={{ color: "#808080" }}
                   name="arrow-back"

@@ -72,7 +72,10 @@ export default class StudentLogin extends Component {
         <View style={style.contentContainer}>
           <StyleProvider style={getTheme(platform)}>
             <Header>
-              <Button transparent>
+              <Button
+                transparent
+                onPress={() => this.props.navigation.navigate("Home")}
+              >
                 <Icon
                   style={{ color: "#808080" }}
                   name="arrow-back"
@@ -88,49 +91,51 @@ export default class StudentLogin extends Component {
 
           <StyleProvider style={getTheme(platform)}>
             <Container style={{ flex: 6 }}>
-              <View style={style.form_Container}>
-                <Text style={styles.input_Instruction2}>
-                  Carnegie Mellon University
-                </Text>
-                <Text style={styles.input_Instruction2}>Australia</Text>
-                <Text style={styles.input_Instruction3}>Library</Text>
-              </View>
-              <View style={styles.loginContainer}>
-                <Text style={styles.input_Instruction4}>Student Login</Text>
-              </View>
-              <View style={styles.loginContainer}>
-                <Text style={styles.input_Instruction5}>Username:</Text>
-                <TextInput
-                  style={styles.inputbox_Login}
-                  multiline
-                  blurOnSubmit
-                  placeholder="username"
-                  autoCapitalize="none"
-                  onChangeText={email => this.setState({ email })}
-                />
-              </View>
-              <View style={styles.loginContainer}>
-                <Text style={styles.input_Instruction5}>Password:</Text>
-                <TextInput
-                  secureTextEntry={true}
-                  style={styles.inputbox_Login}
-                  placeholder="password"
-                  autoCorrect={false}
-                  onChangeText={password => this.setState({ password })}
-                />
-              </View>
-              <View style={styles.loginContainer}>
-                <Button
-                  style={styles.Login_Button}
-                  onPress={() =>
-                    //{this.props.navigation.navigate("MyAccount")}
-                    {
-                      this.login();
-                    }}
-                >
-                  <Text style={styles.buttonText}>LOGIN</Text>
-                </Button>
-              </View>
+              <ScrollView>
+                <View style={style.form_Container}>
+                  <Text style={styles.input_Instruction2}>
+                    Carnegie Mellon University
+                  </Text>
+                  <Text style={styles.input_Instruction2}>Australia</Text>
+                  <Text style={styles.input_Instruction3}>Library</Text>
+                </View>
+                <View style={styles.loginContainer}>
+                  <Text style={styles.input_Instruction4}>Student Login</Text>
+                </View>
+                <View style={styles.loginContainer}>
+                  <Text style={styles.input_Instruction5}>Username:</Text>
+                  <TextInput
+                    style={styles.inputbox_Login}
+                    multiline
+                    blurOnSubmit
+                    placeholder="username"
+                    autoCapitalize="none"
+                    onChangeText={email => this.setState({ email })}
+                  />
+                </View>
+                <View style={styles.loginContainer}>
+                  <Text style={styles.input_Instruction5}>Password:</Text>
+                  <TextInput
+                    secureTextEntry={true}
+                    style={styles.inputbox_Login}
+                    placeholder="password"
+                    autoCorrect={false}
+                    onChangeText={password => this.setState({ password })}
+                  />
+                </View>
+                <View style={styles.loginContainer}>
+                  <Button
+                    style={styles.Login_Button}
+                    onPress={() =>
+                      //{this.props.navigation.navigate("MyAccount")}
+                      {
+                        this.login();
+                      }}
+                  >
+                    <Text style={styles.buttonText}>LOGIN</Text>
+                  </Button>
+                </View>
+              </ScrollView>
             </Container>
           </StyleProvider>
         </View>
@@ -223,7 +228,7 @@ const styles = StyleSheet.create({
   },
 
   input_Instruction5: {
-    width: 80,
+    width: 100,
     fontSize: 16,
     //color: '#FDFEFE',
     fontFamily: "Apple SD Gothic Neo"
@@ -244,6 +249,7 @@ const styles = StyleSheet.create({
   },
 
   loginContainer: {
+    marginLeft: 5,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
@@ -269,7 +275,7 @@ const styles = StyleSheet.create({
   Login_Button: {
     marginTop: 30,
     width: 120,
-    height: 30,
+    height: 40,
     backgroundColor: "#990000",
     justifyContent: "center"
   },

@@ -85,7 +85,7 @@ var style = StyleSheet.create({
 
   liIcon: {
     width: 80,
-    height: 100
+    height: 110
   },
 
   liIcon2: {
@@ -96,7 +96,7 @@ var style = StyleSheet.create({
 
   liItemBody: {
     marginLeft: 10,
-    width: 280
+    width: 260
   },
 
   liTextHeading: {

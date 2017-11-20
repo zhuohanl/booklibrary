@@ -82,101 +82,103 @@ export default class HomeScreen extends Component {
 
           <StyleProvider style={getTheme(platform)}>
             <Container style={{ flex: 6 }}>
-              <View style={style.form_Container}>
-                <Text style={styles.input_Instruction2}>
-                  Carnegie Mellon University
-                </Text>
-                <Text style={styles.input_Instruction2}>Australia</Text>
-                <Text style={styles.input_Instruction3}>Library</Text>
-                <Text style={styles.input_Instruction1}>Search & Find</Text>
-                <Search
-                  ref="search_box"
-                  placeholder="e.g. security in computing"
-                  onChangeText={text => {
-                    keyword.push(text.toLowerCase());
-                    this.setState({ keyword });
-                  }}
-                  searchIconCollapsedMargin={160}
-                  placeholderCollapsedMargin={140}
-                  autoCapitalize="none"
-                  onSearch={() => {
-                    this.props.navigation.navigate("SearchResultList", {
-                      keyword: this.state.keyword
-                    });
-                  }}
-                />
-                <List>
-                  <ListItem>
-                    <TouchableOpacity
-                      style={styles.touchable_highlight}
-                      onPress={() => {
-                        this.props.navigation.navigate("Login");
-                      }}
-                    >
-                      <Text style={styles.input_Instruction}>
-                        View My Library Records
-                      </Text>
-                    </TouchableOpacity>
-                  </ListItem>
-                  <ListItem>
-                    <TouchableOpacity
-                      style={styles.touchable_highlight}
-                      onPress={() => {
-                        this.props.navigation.navigate("Hour");
-                      }}
-                    >
-                      <Text style={styles.input_Instruction}>Library Hour</Text>
-                    </TouchableOpacity>
-                  </ListItem>
-                  <ListItem>
-                    <TouchableOpacity
-                      style={styles.touchable_highlight}
-                      onPress={() => {
-                        this.props.navigation.navigate("Location");
-                      }}
-                    >
-                      <Text style={styles.input_Instruction}>
-                        Library Location
-                      </Text>
-                    </TouchableOpacity>
-                  </ListItem>
-                  <ListItem>
-                    <TouchableOpacity
-                      style={styles.touchable_highlight}
-                      onPress={() => {
-                        this.props.navigation.navigate("Contact");
-                      }}
-                    >
-                      <Text style={styles.input_Instruction}>Contact Us</Text>
-                    </TouchableOpacity>
-                  </ListItem>
-                  <ListItem>
-                    <TouchableOpacity
-                      style={styles.touchable_highlight}
-                      onPress={() => {
-                        this.props.navigation.navigate("FAQ");
-                      }}
-                    >
-                      <Text style={styles.input_Instruction}>
-                        Frequently Asked Questions
-                      </Text>
-                    </TouchableOpacity>
-                  </ListItem>
-                </List>
-              </View>
+              <ScrollView>
+                <View style={style.form_Container}>
+                  <Text style={styles.input_Instruction2}>
+                    Carnegie Mellon University
+                  </Text>
+                  <Text style={styles.input_Instruction2}>Australia</Text>
+                  <Text style={styles.input_Instruction3}>Library</Text>
+                  <Text style={styles.input_Instruction1}>Search & Find</Text>
+                  <Search
+                    ref="search_box"
+                    placeholder="e.g. security in computing"
+                    onChangeText={text => {
+                      keyword.push(text.toLowerCase());
+                      this.setState({ keyword });
+                    }}
+                    searchIconCollapsedMargin={160}
+                    placeholderCollapsedMargin={140}
+                    autoCapitalize="none"
+                    onSearch={() => {
+                      this.props.navigation.navigate("SearchResultList", {
+                        keyword: this.state.keyword
+                      });
+                    }}
+                  />
+                  <List>
+                    <ListItem>
+                      <TouchableOpacity
+                        style={styles.touchable_highlight}
+                        onPress={() => {
+                          this.props.navigation.navigate("Login");
+                        }}
+                      >
+                        <Text style={styles.input_Instruction}>
+                          View My Library Records
+                        </Text>
+                      </TouchableOpacity>
+                    </ListItem>
+                    <ListItem>
+                      <TouchableOpacity
+                        style={styles.touchable_highlight}
+                        onPress={() => {
+                          this.props.navigation.navigate("Hour");
+                        }}
+                      >
+                        <Text style={styles.input_Instruction}>
+                          Library Hour
+                        </Text>
+                      </TouchableOpacity>
+                    </ListItem>
+                    <ListItem>
+                      <TouchableOpacity
+                        style={styles.touchable_highlight}
+                        onPress={() => {
+                          this.props.navigation.navigate("Location");
+                        }}
+                      >
+                        <Text style={styles.input_Instruction}>
+                          Library Location
+                        </Text>
+                      </TouchableOpacity>
+                    </ListItem>
+                    <ListItem>
+                      <TouchableOpacity
+                        style={styles.touchable_highlight}
+                        onPress={() => {
+                          this.props.navigation.navigate("Contact");
+                        }}
+                      >
+                        <Text style={styles.input_Instruction}>Contact Us</Text>
+                      </TouchableOpacity>
+                    </ListItem>
+                    <ListItem>
+                      <TouchableOpacity
+                        style={styles.touchable_highlight}
+                        onPress={() => {
+                          this.props.navigation.navigate("FAQ");
+                        }}
+                      >
+                        <Text style={styles.input_Instruction}>
+                          Frequently Asked Questions
+                        </Text>
+                      </TouchableOpacity>
+                    </ListItem>
+                  </List>
+                  <Button
+                    style={styles.Login_Button}
+                    onPress={() => {
+                      this.props.navigation.navigate("Login");
+                    }}
+                    //{this.login} //TODO: need to enable
+                  >
+                    <Text style={styles.buttonText}>Student Login</Text>
+                  </Button>
+                </View>
+              </ScrollView>
             </Container>
           </StyleProvider>
-          <Container style={styles.beta}>
-            <Button
-              style={styles.Login_Button}
-              onPress={() => {
-                this.props.navigation.navigate("Login");
-              }}
-              //{this.login} //TODO: need to enable
-            >
-              <Text style={styles.buttonText}>Student Login</Text>
-            </Button>
-          </Container>
         </View>
       </View>
     );
@@ -249,8 +251,10 @@ const styles = StyleSheet.create({
   },
 
   Login_Button: {
-    width: 120,
-    height: 30,
+    marginTop: 20,
+    marginLeft: 150,
+    width: 150,
+    height: 40,
     backgroundColor: "#990000",
     justifyContent: "center"
   },

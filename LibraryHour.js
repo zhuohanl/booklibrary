@@ -86,7 +86,10 @@ export default class LibraryHour extends Component {
         <View style={style.contentContainer}>
           <StyleProvider style={getTheme(platform)}>
             <Header>
-              <Button transparent>
+              <Button
+                transparent
+                onPress={() => this.props.navigation.navigate("Home")}
+              >
                 <Icon
                   style={{ color: "#808080" }}
                   name="arrow-back"
@@ -100,29 +103,31 @@ export default class LibraryHour extends Component {
             </Header>
           </StyleProvider>
 
-          <View style={style.form_Container}>
-            <Text style={styles.input_Instruction2}>
-              Carnegie Mellon University
-            </Text>
-            <Text style={styles.input_Instruction2}>Australia</Text>
-            <Text style={styles.input_Instruction3}>Library</Text>
-            <ListItem itemDivider>
-              <Text style={style.heading3}>Opening Hours</Text>
-            </ListItem>
-            <Table
-              style={style.table_Container}
-              borderStyle={{ borderWidth: 0, borderColor: "#ffffff" }}
-            >
-              <TableWrapper style={{ width: 250 }}>
-                <Rows
-                  data={tableData}
-                  style={style.table_Row}
-                  widthArr={widthArr}
-                  textStyle={style.table_Text}
-                />
-              </TableWrapper>
-            </Table>
-          </View>
+          <ScrollView>
+            <View style={style.form_Container}>
+              <Text style={styles.input_Instruction2}>
+                Carnegie Mellon University
+              </Text>
+              <Text style={styles.input_Instruction2}>Australia</Text>
+              <Text style={styles.input_Instruction3}>Library</Text>
+              <ListItem itemDivider>
+                <Text style={style.heading3}>Opening Hours</Text>
+              </ListItem>
+              <Table
+                style={style.table_Container}
+                borderStyle={{ borderWidth: 0, borderColor: "#ffffff" }}
+              >
+                <TableWrapper style={{ width: 250 }}>
+                  <Rows
+                    data={tableData}
+                    style={style.table_Row}
+                    widthArr={widthArr}
+                    textStyle={style.table_Text}
+                  />
+                </TableWrapper>
+              </Table>
+            </View>
+          </ScrollView>
         </View>
       </View>
     );
