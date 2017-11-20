@@ -90,12 +90,12 @@ export default class Map extends Component {
             <Header>
               <Button
                 transparent
-                onPress={() => this.props.navigation.navigate("Location")}
+                onPress={() => this.props.navigation.goBack()}
               >
                 <Icon
                   style={{ color: "#808080" }}
                   name="arrow-back"
-                  onPress={() => this.props.navigation.navigate("Location")}
+                  onPress={() => this.props.navigation.goBack()}
                 />
               </Button>
 

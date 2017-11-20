@@ -74,12 +74,12 @@ export default class StudentLogin extends Component {
             <Header>
               <Button
                 transparent
-                onPress={() => this.props.navigation.navigate("Home")}
+                onPress={() => this.props.navigation.goBack()}
               >
                 <Icon
                   style={{ color: "#808080" }}
                   name="arrow-back"
-                  onPress={() => this.props.navigation.navigate("Home")}
+                  onPress={() => this.props.navigation.goBack()}
                 />
               </Button>
 
@@ -105,25 +105,29 @@ export default class StudentLogin extends Component {
                 <View style={styles.loginContainer}>
                   <Text style={styles.input_Instruction5}>Username:</Text>
                   <TextInput
+                    ref={"username"}
                     style={styles.inputbox_Login}
-                    multiline
                     blurOnSubmit
                     placeholder="username"
                     autoCapitalize="none"
+                    autoCorrect={false}
                     onChangeText={email => this.setState({ email })}
+                    onSubmitEditing={() => this.clear()}
                   />
                 </View>
                 <View style={styles.loginContainer}>
                   <Text style={styles.input_Instruction5}>Password:</Text>
                   <TextInput
+                    ref={"password"}
                     secureTextEntry={true}
                     style={styles.inputbox_Login}
                     placeholder="password"
                     autoCorrect={false}
                     onChangeText={password => this.setState({ password })}
+                    onSubmitEditing={() => this.clear()}
                   />
                 </View>
-                <View style={styles.loginContainer}>
+                <View style={styles.buttonContainer}>
                   <Button
                     style={styles.Login_Button}
                     onPress={() =>
@@ -133,6 +137,18 @@ export default class StudentLogin extends Component {
                       }}
                   >
                     <Text style={styles.buttonText}>LOGIN</Text>
+                  </Button>
+                </View>
+                <View style={styles.buttonContainer}>
+                  <Button
+                    style={styles.Clear_Button}
+                    onPress={() =>
+                      //{this.props.navigation.navigate("MyAccount")}
+                      {
+                        this.clear();
+                      }}
+                  >
+                    <Text style={styles.buttonText2}>CLEAR</Text>
                   </Button>
                 </View>
               </ScrollView>
@@ -175,6 +191,13 @@ export default class StudentLogin extends Component {
       //   }
       // });
     }
+  };
+
+  clear = () => {
+    this.refs["username"].setNativeProps({ text: "" });
+    this.refs["password"].setNativeProps({ text: "" });
+    this.setState({ username: "" });
+    this.setState({ password: "" });
   };
 }
 
@@ -234,26 +257,20 @@ const styles = StyleSheet.create({
     fontFamily: "Apple SD Gothic Neo"
   },
 
-  Login_Button: {
-    width: 120,
-    height: 30,
-    backgroundColor: "#990000",
-    justifyContent: "center"
-  },
-
-  buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
-    margin: 0,
-    fontSize: 12
-  },
-
   loginContainer: {
     marginLeft: 5,
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
     marginBottom: 15
+  },
+
+  buttonContainer: {
+    marginTop: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    marginBottom: 5
   },
 
   inputbox_Login: {
@@ -282,6 +299,21 @@ const styles = StyleSheet.create({
 
   buttonText: {
     color: "#fff",
+    fontWeight: "bold",
+    margin: 0,
+    fontSize: 12
+  },
+
+  Clear_Button: {
+    marginTop: 30,
+    width: 120,
+    height: 40,
+    backgroundColor: "#D3D3D3",
+    justifyContent: "center"
+  },
+
+  buttonText2: {
+    color: "#000000",
     fontWeight: "bold",
     margin: 0,
     fontSize: 12

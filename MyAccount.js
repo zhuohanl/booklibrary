@@ -161,11 +161,14 @@ export default class MyAccount extends Component {
         <View style={style.contentContainer}>
           <StyleProvider style={getTheme(platform)}>
             <Header>
-              <Button transparent onPress={() => this.alertLogout()}>
+              <Button
+                transparent
+                onPress={() => this.props.navigation.goBack()}
+              >
                 <Icon
                   style={{ color: "#808080" }}
                   name="arrow-back"
-                  onPress={() => this.alertLogout()}
+                  onPress={() => this.props.navigation.goBack()}
                 />
               </Button>
 
@@ -182,47 +185,49 @@ export default class MyAccount extends Component {
             </Header>
           </StyleProvider>
 
-          <StyleProvider style={getTheme(platform)}>
-            <Container style={{ flex: 6 }}>
-              <View style={style.form_Container}>
-                <List>
-                  <ListItem>
-                    <Image
-                      style={styles.profileIcon}
-                      source={require("./icon/profile-icon.png")}
-                    />
-                    <Body style={styles.profileBody}>
-                      <Text style={styles.input_Title}>
-                        {this.state.firstName} {this.state.lastName}
+          <ScrollView>
+            <StyleProvider style={getTheme(platform)}>
+              <Container style={{ flex: 6 }}>
+                <View style={style.form_Container}>
+                  <List>
+                    <ListItem>
+                      <Image
+                        style={styles.profileIcon}
+                        source={require("./icon/profile-icon.png")}
+                      />
+                      <Body style={styles.profileBody}>
+                        <Text style={styles.input_Title}>
+                          {this.state.firstName} {this.state.lastName}
+                        </Text>
+                      </Body>
+                    </ListItem>
+                    <ListItem>
+                      <Text style={styles.input_Instruction}>
+                        Email: {this.state.email}
                       </Text>
-                    </Body>
-                  </ListItem>
-                  <ListItem>
-                    <Text style={styles.input_Instruction}>
-                      Email: {this.state.email}
-                    </Text>
-                  </ListItem>
-                  <ListItem>
-                    <TouchableOpacity
-                      style={styles.touchable_highlight}
-                      onPress={() => {
-                        this.props.navigation.navigate("LibraryRecord", {
-                          userId: this.props.navigation.state.params.userId
-                        });
-                      }}
-                    >
-                      <Text style={styles.input_Instruction1}>
-                        On Loan Records
-                      </Text>
-                    </TouchableOpacity>
-                  </ListItem>
-                </List>
-                <TouchableOpacity onPress={() => this.alertLogout2()}>
-                  <Text style={styles.noteText}>Why is my page empty?</Text>
-                </TouchableOpacity>
-              </View>
-            </Container>
-          </StyleProvider>
+                    </ListItem>
+                    <ListItem>
+                      <TouchableOpacity
+                        style={styles.touchable_highlight}
+                        onPress={() => {
+                          this.props.navigation.navigate("LibraryRecord", {
+                            userId: this.props.navigation.state.params.userId
+                          });
+                        }}
+                      >
+                        <Text style={styles.input_Instruction1}>
+                          On Loan Records
+                        </Text>
+                      </TouchableOpacity>
+                    </ListItem>
+                  </List>
+                  <TouchableOpacity onPress={() => this.alertLogout2()}>
+                    <Text style={styles.noteText}>Why is my page empty?</Text>
+                  </TouchableOpacity>
+                </View>
+              </Container>
+            </StyleProvider>
+          </ScrollView>
         </View>
       </View>
     );

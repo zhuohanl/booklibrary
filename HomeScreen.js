@@ -97,8 +97,8 @@ export default class HomeScreen extends Component {
                       keyword.push(text.toLowerCase());
                       this.setState({ keyword });
                     }}
-                    searchIconCollapsedMargin={160}
-                    placeholderCollapsedMargin={140}
+                    searchIconCollapsedMargin={140}
+                    placeholderCollapsedMargin={120}
                     autoCapitalize="none"
                     onSearch={() => {
                       this.props.navigation.navigate("SearchResultList", {

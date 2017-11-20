@@ -161,18 +161,18 @@ export default class SearchResultDetail extends Component {
             <Header>
               <Button
                 transparent
-                onPress={() =>
-                  this.props.navigation.navigate("SearchResultList", {
-                    keyword: this.props.navigation.state.params.keyword
-                  })}
+                onPress={() => this.props.navigation.goBack()}
+                // this.props.navigation.navigate("SearchResultList", {
+                //   keyword: this.props.navigation.state.params.keyword
+                // })}
               >
                 <Icon
                   style={{ color: "#808080" }}
                   name="arrow-back"
-                  onPress={() =>
-                    this.props.navigation.navigate("SearchResultList", {
-                      keyword: this.props.navigation.state.params.keyword
-                    })}
+                  onPress={() => this.props.navigation.goBack()}
+                  // this.props.navigation.navigate("SearchResultList", {
+                  //   keyword: this.props.navigation.state.params.keyword
+                  // })}
                 />
               </Button>
 
